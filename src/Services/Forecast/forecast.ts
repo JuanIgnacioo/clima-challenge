@@ -4,7 +4,7 @@ import { ForecastResponseType } from "./types";
 const APIKEY = "8e53e412472e6e35ac928da4ed8cdd05";
 
 const api = axios.create({
-  baseURL: "https://api.openweathermap.org/data/2.5",
+  // baseURL: "https://api.openweathermap.org",
   headers: {
     "Access-Control-Allow-Credentials": "true",
     "Access-Control-Allow-Methods": "*",
@@ -18,6 +18,6 @@ export const getForecastFetching = (
   query: any
 ): Promise<AxiosResponse<ForecastResponseType>> => {
   return api.get(
-    `/forecast?lat=${query.latitude}&lon=${query.longitude}&appid=${APIKEY}`
+    `/data/2.5/forecast?lat=${query.latitude}&lon=${query.longitude}&appid=${APIKEY}`
   );
 };
