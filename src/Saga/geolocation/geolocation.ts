@@ -7,43 +7,43 @@ import {
   PutEffect,
   takeLatest,
 } from "redux-saga/effects";
-import { actions } from "../../Redux/forecast/actions";
-import * as ForecastService from "../../Services/Forecast/forecast";
-import { ForecastResponseType } from "../../Services/Forecast/types";
+import { actions } from "../../Redux/geolocation/actions";
+import * as GeolocationService from "../../Services/Geolocation/geolocation";
+import { GeolocationResponseType } from "../../Services/Geolocation/types";
 
-export function* getForecast(
+export function* getGeolocation(
   action: any
 ): Generator<
   | CallEffect<AxiosResponse<any>>
   | PutEffect<{ type: string }>
   | CallEffect<void>,
   void,
-  ForecastResponseType
+  GeolocationResponseType
 > {
   const response = yield call(
-    ForecastService.getForecastFetching,
+    GeolocationService.getForecastFetching,
     action.payload
   );
- 
+  console.log(response);
   if (response.status !== 200) {
     if (response.status === 500) {
-      yield put(actions.getForecastError(true));
+      yield put(actions.getGeolocationError(true));
       //   $alerts.next({
       //     type: 'error',
       //     title: i18next.t('RolesByApplicationService:errorGeneralTitle'),
       //     subMessage: i18next.t('RolesByApplicationService:errorGeneralBody'),
       //   });
     } else {
-      yield put(actions.getForecastError(false));
+      yield put(actions.getGeolocationError(false));
     }
   } else {
     const { data } = response;
-    yield put(actions.getForecastSuccess(data));
+    yield put(actions.getGeolocationSuccess(data));
   }
 }
 
 const sagas: ForkEffect<never>[] = [
-  takeLatest(actions.getForecastRequest.type, getForecast),
+  takeLatest(actions.getGeolocationRequest.type, getGeolocation),
 ];
 
 export default sagas;

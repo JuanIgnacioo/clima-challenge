@@ -5,4 +5,8 @@ module.exports = (app : any) => {
         target: 'https://api.openweathermap.org',
         changeOrigin: true
     }))
+    app.use(createProxyMiddleware('/geo/1.0/reverse', {
+        target: 'https://api.openweathermap.org',
+        changeOrigin: true
+    }))
 }

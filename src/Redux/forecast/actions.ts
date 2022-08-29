@@ -14,7 +14,7 @@ export const forecastSlice = createSlice({
   initialState,
   reducers: {
     getForecastRequest(state, action) {
-      console.log("se ejecuto request");
+      
       state.fetching = true;
     },
     getForecastSuccess(state, action) {

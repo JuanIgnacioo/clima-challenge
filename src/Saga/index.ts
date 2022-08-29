@@ -1,7 +1,8 @@
 import { all, call, spawn } from "redux-saga/effects";
 import getForecast from "./forecast/forecast";
+import  getGeolocation from "./geolocation/geolocation";
 
-const sagas = [...getForecast];
+const sagas = [...getForecast, ...getGeolocation];
 
 export default function* rootSaga() {
   yield all(

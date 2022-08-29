@@ -33,7 +33,7 @@ export const Home: React.FC = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         setLatitude(position.coords.latitude.toString());
         setLongitude(position.coords.longitude.toString());
-        console.log(position)
+        
       });
       
     } else {
