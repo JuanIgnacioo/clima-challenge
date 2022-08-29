@@ -24,9 +24,9 @@ export function* getForecast(
     ForecastService.getForecastFetching,
     action.payload
   );
-  console.log(response)
-  if (response.cod !== 200) {
-    if (response.cod === 500) {
+  console.log(response);
+  if (response.status !== 200) {
+    if (response.status === 500) {
       yield put(actions.getForecastError(true));
       //   $alerts.next({
       //     type: 'error',

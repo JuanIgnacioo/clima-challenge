@@ -6,6 +6,7 @@ import ForecastCity from "../../Components/ForecastCity/ForecastCity";
 import { Select } from "chakra-react-select";
 import Swal from "sweetalert2";
 import { CityNames } from "./CityNames";
+import WeatherCard from "../../Components/WeatherCard/WeatherCard";
 
 export const Home: React.FC = () => {
   const [latitude, setLatitude] = useState<string>("");
@@ -32,7 +33,9 @@ export const Home: React.FC = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         setLatitude(position.coords.latitude.toString());
         setLongitude(position.coords.longitude.toString());
+        console.log(position)
       });
+      
     } else {
       Swal.fire({
         title: "Error!",
@@ -51,26 +54,33 @@ export const Home: React.FC = () => {
         w="100%"
         backgroundImage={Sunset}
         backgroundSize={"100%"}
-        position="absolute"
       >
-        <Box textAlign="center" fontSize="xl">
-          <Text fontSize="3xl" mt={20} color="white">
-            Consultá el clima en distintas localidades
-          </Text>
-          <Text fontSize="2xl" color="white">
-            Seleccione otro lugar
-          </Text>
-          <Center>
-            <Box w={'300px'} mt={5} backgroundColor={'lightgray'}>
-            <FormControl>
-              <Select size="sm" placeholder="Ciudades" selectedOptionColor="gray" options={CityNames} onChange={(value) => console.log(value)}/>
-            </FormControl>
-            </Box>
-          </Center>
-        </Box>
+        <Center>
+          <Box textAlign="center" fontSize="xl" mt={300} position="absolute">
+            <Text fontSize="3xl" color="white">
+              Consultá el clima en distintas localidades
+            </Text>
+            <Text fontSize="2xl" color="white">
+              Seleccione otro lugar
+            </Text>
+            <Center>
+              <Box w={"300px"} mt={5} backgroundColor={"lightgray"}>
+                <FormControl>
+                  <Select
+                    size="sm"
+                    placeholder="Ciudades"
+                    selectedOptionColor="gray"
+                    options={CityNames}
+                    onChange={(value) => console.log(value)}
+                  />
+                </FormControl>
+              </Box>
+            </Center>
+          </Box>
+        </Center>
       </Box>
-      <Box>
-        <ForecastCity latitude={latitude} longitude={longitude} />
+      <Box position="absolute" color={"black"} textAlign='center' w={'100%'}>
+        <Center><ForecastCity latitude={latitude} longitude={longitude} /></Center>
       </Box>
     </>
   );

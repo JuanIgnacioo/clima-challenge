@@ -1,6 +1,6 @@
 export type ForecastResponseType = {
     data: ForecastDataType;
-    cod: number;
+    status: number;
   };
   
   export type ForecastDataType = {

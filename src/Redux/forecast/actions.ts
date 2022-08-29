@@ -4,6 +4,8 @@ import { getForecastState } from "./types";
 const initialState: getForecastState = {
   forecast: [],
   fetching: false,
+  city: "",
+  date: "",
   error: "",
 };
 
@@ -17,7 +19,8 @@ export const forecastSlice = createSlice({
     },
     getForecastSuccess(state, action) {
       console.log(action);
-      state.forecast = action.payload.result;
+      // state.city = action.payload.city.name;
+      state.forecast = action.payload.daily.slice(0,6)
       state.fetching = false;
     },
     getForecastError(state, action) {
