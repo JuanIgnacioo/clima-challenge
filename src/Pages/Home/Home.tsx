@@ -1,13 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Box, Center, Select, Text } from "@chakra-ui/react";
+import { Box, Center, FormControl, Text } from "@chakra-ui/react";
 import Header from "../../Components/Header/Header";
 import Sunset from "../../Assets/Sunset.jpeg";
 import ForecastCity from "../../Components/ForecastCity/ForecastCity";
-import Swal from 'sweetalert2';
+import { Select } from "chakra-react-select";
+import Swal from "sweetalert2";
+import { CityNames } from "./CityNames";
 
 export const Home: React.FC = () => {
   const [latitude, setLatitude] = useState<string>("");
   const [longitude, setLongitude] = useState<string>("");
+  const [coordinates, setCoordinates] = useState({
+    latitude: "",
+    longitude: "",
+  });
+
+  const setNewCoordinates = (cityName: string) => {
+    switch (cityName) {
+      case "NY":
+        setCoordinates((prevState) => ({
+          ...prevState,
+          latitude: "40.774042",
+          longitude: "-73.974142",
+        }));
+        break;
+    }
+  };
 
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -16,12 +34,12 @@ export const Home: React.FC = () => {
         setLongitude(position.coords.longitude.toString());
       });
     } else {
-        Swal.fire({
-            title: 'Error!',
-            text: 'El navegador no soporta geolocalización',
-            icon: 'error',
-            confirmButtonText: 'Cool'
-          })
+      Swal.fire({
+        title: "Error!",
+        text: "El navegador no soporta geolocalización",
+        icon: "error",
+        confirmButtonText: "Cool",
+      });
     }
   }, []);
 
@@ -43,18 +61,11 @@ export const Home: React.FC = () => {
             Seleccione otro lugar
           </Text>
           <Center>
-            <Select
-              placeholder="Select option"
-              width={"xs"}
-              mt={3}
-              color="gray"
-            >
-              <option value="option1">New York</option>
-              <option value="option2">Bankgkok</option>
-              <option value="option3">Roma</option>
-              <option value="option3">Munich</option>
-              <option value="option3">Moscú</option>
-            </Select>
+            <Box w={'300px'} mt={5} backgroundColor={'lightgray'}>
+            <FormControl>
+              <Select size="sm" placeholder="Ciudades" selectedOptionColor="gray" options={CityNames} onChange={(value) => console.log(value)}/>
+            </FormControl>
+            </Box>
           </Center>
         </Box>
       </Box>
