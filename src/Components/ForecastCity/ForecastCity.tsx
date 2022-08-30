@@ -35,7 +35,7 @@ export const ForecastCity: React.FC<ForectasCityProps> = ({ coordinates }) => {
 
   return (
     <>
-      <Box mt={5} padding="10px 50px">
+      <Box mt={5} padding="10px 50px" data-testid="forecastcity-id">
         <Center>
           {fetchingForecast || fetchingCityName ? (
             <CardContentLoader />
@@ -43,7 +43,7 @@ export const ForecastCity: React.FC<ForectasCityProps> = ({ coordinates }) => {
             <Grid templateColumns="repeat(6, 1fr)" gap={15}>
               {forecast &&
                 forecast.map((data: ForecastType, index: number) => {
-                  return <WeatherCard dataWeather={data} key={index} />;
+                  return <WeatherCard  dataWeather={data} key={index} />;
                 })}
             </Grid>
           )}

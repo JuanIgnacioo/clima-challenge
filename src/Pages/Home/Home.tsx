@@ -113,7 +113,7 @@ export const Home: React.FC = () => {
             <Box mt={6}>
               <Text as="em" fontSize="35px" color={"white"}>
                 {fetchingCityName
-                  ? "Cargando nombre de ciudad ..."
+                  ? "Cargando ciudad ..."
                   : `Pronóstico extendido para ${cityname}`}
               </Text>
             </Box>

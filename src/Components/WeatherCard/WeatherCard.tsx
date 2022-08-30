@@ -19,9 +19,9 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ dataWeather }) => {
   const cityname = useSelector(getCityName);
   const fetchingCity = useSelector(getGeolocationFetching);
   const fetchingWeather = useSelector(getForecastFetching);
-  console.log(dataWeather);
+
   return (
-    <>
+    <div data-testid="weathercard-id">
       <Box
         backgroundImage={`${cardBackground}`}
         backgroundPosition={"center"}
@@ -112,7 +112,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ dataWeather }) => {
           </Flex>
         </Box>
       </Box>
-    </>
+    </div>
   );
 };
 
