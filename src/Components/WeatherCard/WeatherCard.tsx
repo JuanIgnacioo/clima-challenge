@@ -1,7 +1,13 @@
 import { Box, Flex, Heading, Image, Text, Tooltip } from "@chakra-ui/react";
 import React from "react";
+import { useSelector } from "react-redux";
 import cardBackground from "../../Assets/mountain.jpeg";
+import { getForecastFetching } from "../../Redux/forecast/selectors";
 import { ForecastType } from "../../Redux/forecast/types";
+import {
+  getCityName,
+  getGeolocationFetching,
+} from "../../Redux/geolocation/selectors";
 
 import { getTimestampWeekDay, getWeatherIcon } from "./utils";
 
@@ -10,8 +16,10 @@ type WeatherCardProps = {
 };
 
 const WeatherCard: React.FC<WeatherCardProps> = ({ dataWeather }) => {
-  
-  
+  const cityname = useSelector(getCityName);
+  const fetchingCity = useSelector(getGeolocationFetching);
+  const fetchingWeather = useSelector(getForecastFetching)
+  console.log(dataWeather);
   return (
     <>
       <Box
@@ -40,13 +48,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ dataWeather }) => {
           color={"white"}
           textAlign={"center"}
         >
-          {/* <Heading as={"h4"} fontSize={"xs"} fontWeight={"bold"}>
-            {getTimestampWeekDay(weather.dt)}
-          </Heading>
-          <Text>{getByTimestamp(weather.dt)}</Text> */}
-
           {
-            // <Tooltip hasArrow label={weather.weather[0].main} placement={"top"}></Tooltip>
             <Tooltip hasArrow placement={"top"}>
               <Image
                 width={"80px"}
@@ -60,11 +62,18 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ dataWeather }) => {
           <Heading as={"h4"} fontSize={"xs"} fontWeight={"bold"}>
             {getTimestampWeekDay(dataWeather.dt)}
           </Heading>
-   
 
-          <Heading fontSize={"lg"}>nombre ciudad</Heading>
+          <Heading fontSize={"lg"}>
+            {fetchingCity ? "Cargando.." : cityname}
+          </Heading>
 
-          {<Text fontSize={"md"}>description</Text>}
+          {
+            <Text fontSize={"md"}>
+              {dataWeather &&
+                dataWeather.weather &&
+                dataWeather.weather[0].description}
+            </Text>
+          }
 
           <Flex
             justifyContent={"center"}
@@ -83,16 +92,17 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ dataWeather }) => {
             }}
           >
             <Box>
-              <Text fontSize={"sm"}>Current Temp.</Text>
-              <Text fontWeight={"bold"}>temperatura ºC</Text>
+              <Text fontWeight={"bold"}>{fetchingWeather? '...' :`Max temp ${Math.round(
+                dataWeather.temp.max
+              )}ºC`}</Text>
             </Box>
             <Box>
-              <Text fontSize={"sm"}>Feels Like</Text>
-              <Text fontWeight={"bold"}>Algunos grados ºC</Text>
+              <Text fontSize={"sm"}>{fetchingWeather? '...' : `Min temp ${Math.round(dataWeather.temp.min)} ºC`}</Text>
+              
             </Box>
             <Box>
               <Text fontSize={"sm"}>Humedad</Text>
-              <Text fontWeight={"bold"}>porcentaje%</Text>
+              <Text fontWeight={"bold"}>{dataWeather.humidity}%</Text>
             </Box>
           </Flex>
         </Box>

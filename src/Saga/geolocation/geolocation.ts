@@ -24,15 +24,9 @@ export function* getGeolocation(
     GeolocationService.getForecastFetching,
     action.payload
   );
-  console.log(response);
   if (response.status !== 200) {
     if (response.status === 500) {
       yield put(actions.getGeolocationError(true));
-      //   $alerts.next({
-      //     type: 'error',
-      //     title: i18next.t('RolesByApplicationService:errorGeneralTitle'),
-      //     subMessage: i18next.t('RolesByApplicationService:errorGeneralBody'),
-      //   });
     } else {
       yield put(actions.getGeolocationError(false));
     }

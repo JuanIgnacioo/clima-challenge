@@ -1,10 +1,17 @@
 export interface getForecastState {
   forecast: ForecastType[];
+  currentForecast: CurrentForecastType;
   city: string;
   date: string;
   fetching: boolean;
   error: string;
 }
+
+export type CurrentForecastType = {
+  feels_like: number;
+  temp: number;
+  weather: WeatherType;
+};
 
 export type ForecastType = {
   clouds: CloudsType;
@@ -14,6 +21,7 @@ export type ForecastType = {
   pop: number;
   visibility: number;
   temp: TempType;
+  humidity: number;
   weather: WeatherType[];
 };
 

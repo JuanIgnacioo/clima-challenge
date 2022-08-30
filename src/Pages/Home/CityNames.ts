@@ -1,3 +1,5 @@
+import { CoordinatesType } from "../../Components/ForecastCity/types";
+
 export const CityNames = [
   {
     value: {
@@ -35,5 +37,10 @@ export const CityNames = [
     label: "Cyprus",
   },
 ];
+
+export type SelectOptionType = {
+  label: string;
+  value: CoordinatesType;
+}
 
 export {}

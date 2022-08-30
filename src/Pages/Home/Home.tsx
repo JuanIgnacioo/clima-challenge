@@ -1,41 +1,74 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Box, Center, FormControl, Text } from "@chakra-ui/react";
 import Header from "../../Components/Header/Header";
 import Sunset from "../../Assets/Sunset.jpeg";
 import ForecastCity from "../../Components/ForecastCity/ForecastCity";
 import { Select } from "chakra-react-select";
 import Swal from "sweetalert2";
-import { CityNames } from "./CityNames";
-import WeatherCard from "../../Components/WeatherCard/WeatherCard";
+import { CityNames, SelectOptionType } from "./CityNames";
+
+import { actions as GeolocationActions } from "../../Redux/geolocation/actions";
+import {
+  getCurrentForecast,
+  getForecastFetching,
+} from "../../Redux/forecast/selectors";
+import {
+  getCityName,
+  getGeolocationFetching,
+} from "../../Redux/geolocation/selectors";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Home: React.FC = () => {
-  const [latitude, setLatitude] = useState<string>("");
-  const [longitude, setLongitude] = useState<string>("");
+  const cityname = useSelector(getCityName);
+  const fetchingCityName = useSelector(getGeolocationFetching);
+  const fetchingForecast = useSelector(getForecastFetching);
+  const currentForecast = useSelector(getCurrentForecast);
+  const dispatch = useDispatch();
+
   const [coordinates, setCoordinates] = useState({
     latitude: "",
     longitude: "",
   });
 
-  const setNewCoordinates = (cityName: string) => {
-    switch (cityName) {
-      case "NY":
-        setCoordinates((prevState) => ({
-          ...prevState,
-          latitude: "40.774042",
-          longitude: "-73.974142",
-        }));
-        break;
-    }
+  const setNewCoordinates = (selectValues: SelectOptionType) => {
+    setCoordinates((prevState) => ({
+      ...prevState,
+      latitude: selectValues.value.latitude,
+      longitude: selectValues.value.longitude,
+    }));
+    callGeolocationRequest(
+      selectValues.value.latitude,
+      selectValues.value.longitude
+    );
   };
+
+  const callGeolocationRequest = useCallback(
+    (la: string, lo: string) => {
+      if (la === undefined || lo === undefined) return null;
+      dispatch(
+        GeolocationActions.getGeolocationRequest({
+          latitude: la,
+          longitude: lo,
+        })
+      );
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        setLatitude(position.coords.latitude.toString());
-        setLongitude(position.coords.longitude.toString());
-        
+        setCoordinates((prevState) => ({
+          ...prevState,
+          latitude: position.coords.latitude.toString(),
+          longitude: position.coords.longitude.toString(),
+        }));
+
+        callGeolocationRequest(
+          position.coords.latitude.toString(),
+          position.coords.longitude.toString()
+        );
       });
-      
     } else {
       Swal.fire({
         title: "Error!",
@@ -44,7 +77,7 @@ export const Home: React.FC = () => {
         confirmButtonText: "Cool",
       });
     }
-  }, []);
+  }, [callGeolocationRequest]);
 
   return (
     <>
@@ -58,7 +91,7 @@ export const Home: React.FC = () => {
         <Center>
           <Box textAlign="center" fontSize="xl" mt={300} position="absolute">
             <Text fontSize="3xl" color="white">
-              Consultá el clima en distintas localidades
+              Consultá el pronostico extendido en distintas localidades
             </Text>
             <Text fontSize="2xl" color="white">
               Seleccione otro lugar
@@ -68,19 +101,42 @@ export const Home: React.FC = () => {
                 <FormControl>
                   <Select
                     size="sm"
+                    isDisabled={fetchingCityName || fetchingForecast}
                     placeholder="Ciudades"
                     selectedOptionColor="gray"
                     options={CityNames}
-                    onChange={(value) => console.log(value)}
+                    onChange={(value: any) => setNewCoordinates(value)}
                   />
                 </FormControl>
               </Box>
             </Center>
+            <Box mt={10}>
+              <Text as="em" fontSize="35px" color={"white"}>
+                {fetchingCityName
+                  ? "Cargando nombre de ciudad ..."
+                  : `Pronóstico extendido para ${cityname}`}
+              </Text>
+            </Box>
+            <Box mt={1}>
+              <Text as="b" fontSize="15px" color={"white"}>
+                Temp actual:
+                {fetchingForecast
+                  ? "Cargando ..."
+                  : ` ${Math.round(currentForecast.temp)} °C`}
+              </Text>
+            </Box>
+            <Box>
+              <Text as="b" fontSize="15px" color={"white"}>
+                Sensacion Termica:  {fetchingForecast ? "Cargando ..." : `${Math.round(currentForecast.feels_like)}°C`}
+              </Text>
+            </Box>
           </Box>
         </Center>
       </Box>
-      <Box position="absolute" color={"black"} textAlign='center' w={'100%'}>
-        <Center><ForecastCity latitude={latitude} longitude={longitude} /></Center>
+      <Box position="absolute" color={"black"} textAlign="center" w={"100%"}>
+        <Center>
+          <ForecastCity coordinates={coordinates} />
+        </Center>
       </Box>
     </>
   );

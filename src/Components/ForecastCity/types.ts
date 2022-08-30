@@ -1,4 +1,8 @@
 export type ForectasCityProps = {
-  latitude: string;
-  longitude: string;
+  coordinates : CoordinatesType;
 };
+
+export type CoordinatesType = {
+  latitude: string;
+  longitude: string
+}

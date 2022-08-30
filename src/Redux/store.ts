@@ -1,7 +1,7 @@
 import createSagaMiddleware from "@redux-saga/core";
 import { createStore, compose, applyMiddleware, combineReducers } from "redux";
 import pronostico from "./forecast/actions";
-import geolocation from './geolocation/actions';
+import geolocation from "./geolocation/actions";
 import rootSaga from "../Saga/index";
 
 declare global {
@@ -15,7 +15,7 @@ declare global {
 
 export const rootReducer = combineReducers({
   pronostico,
-  geolocation
+  geolocation,
 });
 const sagaMiddleware = createSagaMiddleware();
 

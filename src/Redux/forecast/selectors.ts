@@ -16,3 +16,8 @@ export const getCityName = createDraftSafeSelector(
   selectSelf,
   (state) => state.pronostico.city
 );
+
+export const getCurrentForecast = createDraftSafeSelector(
+  selectSelf,
+  (state) => state.pronostico.currentForecast
+);

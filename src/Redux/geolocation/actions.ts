@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getGeolocationState } from "./types";
 
 const initialState: getGeolocationState = {
-  cityName: '',
-  fetching: false,
-  error: ''
+  cityName: "",
+  fetching: true,
+  error: "",
 };
 
 export const geolocationSlice = createSlice({
@@ -12,13 +12,10 @@ export const geolocationSlice = createSlice({
   initialState,
   reducers: {
     getGeolocationRequest(state, action) {
-    
       state.fetching = true;
     },
     getGeolocationSuccess(state, action) {
-      console.log(action);
-
-      //   state.cityName = action.payload.daily.slice(0,6)
+      state.cityName = action.payload[0].name;
       state.fetching = false;
     },
     getGeolocationError(state, action) {
