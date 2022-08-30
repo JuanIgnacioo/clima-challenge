@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Box, Center, FormControl, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, FormControl, Text } from "@chakra-ui/react";
 import Header from "../../Components/Header/Header";
 import Sunset from "../../Assets/Sunset.jpeg";
 import ForecastCity from "../../Components/ForecastCity/ForecastCity";
@@ -110,36 +110,50 @@ export const Home: React.FC = () => {
                 </FormControl>
               </Box>
             </Center>
-            <Box mt={6}>
-              <Text as="em" fontSize="35px" color={"white"}>
-                {fetchingCityName
-                  ? "Cargando ciudad ..."
-                  : `Pronóstico extendido para ${cityname}`}
-              </Text>
-            </Box>
-            <Box mt={1}>
-              <Text as="b" fontSize="15px" color={"white"}>
-                Temp actual:
-                {fetchingForecast
-                  ? "Cargando ..."
-                  : ` ${Math.round(currentForecast.temp)} °C`}
-              </Text>
-            </Box>
-            <Box>
-              <Text as="b" fontSize="15px" color={"white"}>
-                Sensacion Termica:{" "}
-                {fetchingForecast || fetchingCityName
-                  ? "Cargando ..."
-                  : `${Math.round(currentForecast.feels_like)}°C`}
-              </Text>
-            </Box>
-            <Box>
-              <Text as="b" fontSize="15px" color={"white"}>
-                Cielo:{" "}
-                {fetchingForecast || fetchingCityName
-                  ? "Cargando ..."
-                  : `${currentForecast?.weather?.description}`}
-              </Text>
+            <Box
+              justifyContent={"center"}
+              padding={2}
+              marginTop={4}
+              borderRadius={"10px"}
+              backgroundColor={"whiteAlpha.500"}
+              sx={{
+                "& *": {
+                  textAlign: "center",
+                  flex: ["0 1 50%", "0 1 50%", "auto"],
+                },
+              }}
+            >
+              <Box>
+                <Text as="b" fontSize="35px" color="white">
+                  {fetchingCityName
+                    ? "Cargando ciudad ..."
+                    : `Pronóstico extendido para ${cityname}`}
+                </Text>
+              </Box>
+              <Box>
+                <Text as="cite" fontSize="15px" color={"white"}>
+                  Temp actual:
+                  {fetchingForecast
+                    ? "Cargando ..."
+                    : ` ${Math.round(currentForecast.temp)} °C`}
+                </Text>
+              </Box>
+              <Box>
+                <Text as="cite" fontSize="15px" color={"white"}>
+                  Sensacion Termica:{" "}
+                  {fetchingForecast || fetchingCityName
+                    ? "Cargando ..."
+                    : `${Math.round(currentForecast.feels_like)}°C`}
+                </Text>
+              </Box>
+              <Box>
+                <Text as="cite" fontSize="15px" color={"white"}>
+                  Cielo:{" "}
+                  {fetchingForecast || fetchingCityName
+                    ? "Cargando ..."
+                    : `${currentForecast?.weather?.description}`}
+                </Text>
+              </Box>
             </Box>
           </Box>
         </Center>

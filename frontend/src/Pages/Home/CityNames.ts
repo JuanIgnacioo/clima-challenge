@@ -31,10 +31,10 @@ export const CityNames = [
   },
   {
     value: {
-      latitude: "35.012440",
-      longitude: "33.265756",
+      latitude: "19.429502",
+      longitude: "-99.127723",
     },
-    label: "Nicosia District",
+    label: "México",
   },
 ];
 

@@ -24,7 +24,7 @@ export function* getForecast(
     ForecastService.getForecastFetching,
     action.payload
   );
- 
+
   if (response.status !== 200) {
     if (response.status === 500) {
       yield put(actions.getForecastError(true));

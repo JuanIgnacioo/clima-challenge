@@ -1,6 +1,6 @@
 import { all, call, spawn } from "redux-saga/effects";
 import getForecast from "./forecast/forecast";
-import  getGeolocation from "./geolocation/geolocation";
+import getGeolocation from "./geolocation/geolocation";
 
 const sagas = [...getForecast, ...getGeolocation];
 

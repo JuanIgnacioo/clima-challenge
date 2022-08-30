@@ -43,7 +43,7 @@ export const ForecastCity: React.FC<ForectasCityProps> = ({ coordinates }) => {
             <Grid templateColumns="repeat(6, 1fr)" gap={15}>
               {forecast &&
                 forecast.map((data: ForecastType, index: number) => {
-                  return <WeatherCard  dataWeather={data} key={index} />;
+                  return <WeatherCard dataWeather={data} key={index} />;
                 })}
             </Grid>
           )}
