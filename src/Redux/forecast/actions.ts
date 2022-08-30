@@ -6,12 +6,12 @@ const initialState: getForecastState = {
   currentForecast: {
     feels_like: 0,
     temp: 0,
-    weather:{
+    weather: {
       id: 0,
-      main: '',
-      description: '',
-      icon: ''
-    }
+      main: "",
+      description: "",
+      icon: "",
+    },
   },
   fetching: false,
   city: "",
@@ -28,12 +28,16 @@ export const forecastSlice = createSlice({
     },
     getForecastSuccess(state, action) {
       // state.city = action.payload.city.name;
+
       state.currentForecast.feels_like = action.payload.current.feels_like;
       state.currentForecast.temp = action.payload.current.temp;
       state.currentForecast.weather.id = action.payload.current.weather[0].id;
-      state.currentForecast.weather.main = action.payload.current.weather[0].main;
-      state.currentForecast.weather.description = action.payload.current.weather[0].description;
-      state.currentForecast.weather.icon = action.payload.current.weather[0].icon;
+      state.currentForecast.weather.main =
+        action.payload.current.weather[0].main;
+      state.currentForecast.weather.description =
+        action.payload.current.weather[0].description;
+      state.currentForecast.weather.icon =
+        action.payload.current.weather[0].icon;
       state.forecast = action.payload.daily.slice(0, 6);
       state.fetching = false;
     },

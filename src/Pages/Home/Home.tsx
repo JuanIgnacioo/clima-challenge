@@ -110,7 +110,7 @@ export const Home: React.FC = () => {
                 </FormControl>
               </Box>
             </Center>
-            <Box mt={10}>
+            <Box mt={6}>
               <Text as="em" fontSize="35px" color={"white"}>
                 {fetchingCityName
                   ? "Cargando nombre de ciudad ..."
@@ -127,7 +127,18 @@ export const Home: React.FC = () => {
             </Box>
             <Box>
               <Text as="b" fontSize="15px" color={"white"}>
-                Sensacion Termica:  {fetchingForecast ? "Cargando ..." : `${Math.round(currentForecast.feels_like)}°C`}
+                Sensacion Termica:{" "}
+                {fetchingForecast || fetchingCityName
+                  ? "Cargando ..."
+                  : `${Math.round(currentForecast.feels_like)}°C`}
+              </Text>
+            </Box>
+            <Box>
+              <Text as="b" fontSize="15px" color={"white"}>
+                Cielo:{" "}
+                {fetchingForecast || fetchingCityName
+                  ? "Cargando ..."
+                  : `${currentForecast?.weather?.description}`}
               </Text>
             </Box>
           </Box>

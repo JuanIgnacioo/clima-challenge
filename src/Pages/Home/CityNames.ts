@@ -34,13 +34,13 @@ export const CityNames = [
       latitude: "35.012440",
       longitude: "33.265756",
     },
-    label: "Cyprus",
+    label: "Nicosia District",
   },
 ];
 
 export type SelectOptionType = {
   label: string;
   value: CoordinatesType;
-}
+};
 
-export {}
+export {};

@@ -18,7 +18,7 @@ type WeatherCardProps = {
 const WeatherCard: React.FC<WeatherCardProps> = ({ dataWeather }) => {
   const cityname = useSelector(getCityName);
   const fetchingCity = useSelector(getGeolocationFetching);
-  const fetchingWeather = useSelector(getForecastFetching)
+  const fetchingWeather = useSelector(getForecastFetching);
   console.log(dataWeather);
   return (
     <>
@@ -92,13 +92,18 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ dataWeather }) => {
             }}
           >
             <Box>
-              <Text fontWeight={"bold"}>{fetchingWeather? '...' :`Max temp ${Math.round(
-                dataWeather.temp.max
-              )}ºC`}</Text>
+              <Text fontWeight={"bold"}>
+                {fetchingWeather
+                  ? "..."
+                  : `Temperatura máxima ${Math.round(dataWeather.temp.max)}ºC`}
+              </Text>
             </Box>
             <Box>
-              <Text fontSize={"sm"}>{fetchingWeather? '...' : `Min temp ${Math.round(dataWeather.temp.min)} ºC`}</Text>
-              
+              <Text fontSize={"sm"}>
+                {fetchingWeather
+                  ? "..."
+                  : `Temperatura mín ${Math.round(dataWeather.temp.min)} ºC`}
+              </Text>
             </Box>
             <Box>
               <Text fontSize={"sm"}>Humedad</Text>
