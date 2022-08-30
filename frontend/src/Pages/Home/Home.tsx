@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Box, Center, Flex, FormControl, Text } from "@chakra-ui/react";
+import { Box, Center, FormControl, Text } from "@chakra-ui/react";
 import Header from "../../Components/Header/Header";
 import Sunset from "../../Assets/Sunset.jpeg";
 import ForecastCity from "../../Components/ForecastCity/ForecastCity";
