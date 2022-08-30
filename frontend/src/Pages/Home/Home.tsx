@@ -58,16 +58,17 @@ export const Home: React.FC = () => {
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        setCoordinates((prevState) => ({
-          ...prevState,
-          latitude: position.coords.latitude.toString(),
-          longitude: position.coords.longitude.toString(),
-        }));
-
-        callGeolocationRequest(
-          position.coords.latitude.toString(),
-          position.coords.longitude.toString()
-        );
+        if (position?.coords?.latitude && position?.coords.longitude) {
+          setCoordinates((prevState) => ({
+            ...prevState,
+            latitude: position.coords.latitude.toString(),
+            longitude: position.coords.longitude.toString(),
+          }));
+          callGeolocationRequest(
+            position.coords.latitude.toString(),
+            position.coords.longitude.toString()
+          );
+        }
       });
     } else {
       Swal.fire({
@@ -125,7 +126,7 @@ export const Home: React.FC = () => {
             >
               <Box>
                 <Text as="b" fontSize="35px" color="white">
-                  {fetchingCityName
+                  {fetchingCityName || cityname === ""
                     ? "Cargando ciudad ..."
                     : `Pronóstico extendido para ${cityname}`}
                 </Text>
@@ -133,7 +134,7 @@ export const Home: React.FC = () => {
               <Box>
                 <Text as="cite" fontSize="15px" color={"white"}>
                   Temp actual:
-                  {fetchingForecast
+                  {fetchingForecast || fetchingCityName || cityname === ""
                     ? "Cargando ..."
                     : ` ${Math.round(currentForecast.temp)} °C`}
                 </Text>
@@ -141,7 +142,7 @@ export const Home: React.FC = () => {
               <Box>
                 <Text as="cite" fontSize="15px" color={"white"}>
                   Sensacion Termica:{" "}
-                  {fetchingForecast || fetchingCityName
+                  {fetchingForecast || fetchingCityName || cityname === ""
                     ? "Cargando ..."
                     : `${Math.round(currentForecast.feels_like)}°C`}
                 </Text>
@@ -149,7 +150,7 @@ export const Home: React.FC = () => {
               <Box>
                 <Text as="cite" fontSize="15px" color={"white"}>
                   Cielo:{" "}
-                  {fetchingForecast || fetchingCityName
+                  {fetchingForecast || fetchingCityName || cityname === ""
                     ? "Cargando ..."
                     : `${currentForecast?.weather?.description}`}
                 </Text>

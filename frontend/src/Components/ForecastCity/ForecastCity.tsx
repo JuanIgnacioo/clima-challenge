@@ -37,7 +37,7 @@ export const ForecastCity: React.FC<ForectasCityProps> = ({ coordinates }) => {
     <>
       <Box mt={5} padding="10px 50px" data-testid="forecastcity-id">
         <Center>
-          {fetchingForecast || fetchingCityName ? (
+          {fetchingForecast || fetchingCityName || forecast.length === 0 ? (
             <CardContentLoader />
           ) : (
             <Grid templateColumns="repeat(6, 1fr)" gap={15}>

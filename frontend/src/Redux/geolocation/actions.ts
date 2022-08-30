@@ -3,7 +3,7 @@ import { getGeolocationState } from "./types";
 
 const initialState: getGeolocationState = {
   cityName: "",
-  fetching: true,
+  fetching: false,
   error: "",
 };
 
