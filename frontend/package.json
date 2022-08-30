@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "https://api.openweathermap.org",
-  "homepage": "http://localhost:3000",
   "dependencies": {
     "@chakra-ui/react": "^2.2.9",
     "@emotion/react": "^11.10.0",
